@@ -1,3 +1,22 @@
+env:
+  global:
+   # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
+   #   via the "travis encrypt" command using the project repo's public key
+   - secure: "bm3z5umnxkTcKP6TOUMjOddMlq/EHAVILVwW3OZLaQ3cAYRXqyYRLAW+qXPk/M0kB3Qr55cWkBywSr8BugH0/p08XvIbayEc6BjByDPZ5PKe2/w0mv+sWLDpXAoOKOHD34FUA/aKlIxXOA/1aWTU/u3cPujK7y4uOkdvyKhLbjQ="
+
+before_install:
+  - echo -n | openssl s_client -connect https://scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-
+
+addons:
+  coverity_scan:
+    project:
+      name: "bofhbug/justc-envdir"
+      description: "<Your project description here>"
+    build_command_prepend: "bash -e ${TRAVIS_BUILD_DIR}/.travis.yml.install"
+    build_command: "bash -e ${TRAVIS_BUILD_DIR}/.travis.yml.script"
+    branch_pattern: coverity_scan
+    
+
 language: c
 compiler: gcc
 dist: trusty
