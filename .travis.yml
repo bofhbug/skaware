@@ -2,7 +2,7 @@ env:
   global:
    # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
    #   via the "travis encrypt" command using the project repo's public key
-   - secure: "D/7V0U1jxNx8ASH4g8rl32P9QXuHYXwkYpkeEst2TIoZhf0ccg2w1rSodJeRKYcnWHHZEP/svMhT9CODOj4QR1Sjk+fvs9uIrGbIGaVv4GqV3qKj+eY7IUxE8sISfsNSsjxUpBsjHlRzehz/p4DsNKIf/PqmZx0OWIFMVq9ys8w="
+   - secure: "SVHcd1tA3IfPrdBPAlD38IOJB6qiQd//DXDShEMbO607tvLnHNmyxhjRluDjec3T2VPiSkZYnvFTP6HCAMN7X5rj9pHotsfLdPwJP3Q3KHHZT9p9wU0y4u9tZwzrGEgFNi/DMjK3phHlyi2JPkhtfc1/0K0ym/0i+9Dba5a+zRI="
 
 before_install:
   - echo -n | openssl s_client -connect https://scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-
@@ -11,10 +11,11 @@ addons:
   coverity_scan:
     project:
       name: "bofhbug/skaware"
+      description: "<Your project description here>"
+    notification_email: bofh.bug+github.com@gmail.com
     build_command_prepend: "bash -e ${TRAVIS_BUILD_DIR}/.travis.yml.install"
     build_command: "bash -e ${TRAVIS_BUILD_DIR}/.travis.yml.script && bash -e ${TRAVIS_BUILD_DIR}/.travis.yml.after_success"
     branch_pattern: coverity_scan
-    
 
 language: c
 compiler: gcc
